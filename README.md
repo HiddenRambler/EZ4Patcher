@@ -17,3 +17,10 @@ Put the dll along with the following files from the build and run the exe:
     EZ4Patcher.exe
     EZ4Patcher.exe.config
     EZBridge.dll
+
+	
+### Copyright/Licence
+
+Copyright 2015 rambler@hiddenramblings.com
+
+Licensed under Apache Version 2.0
