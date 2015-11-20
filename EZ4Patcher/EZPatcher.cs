@@ -123,6 +123,7 @@ namespace EZ4Patcher
         {
             var outputdir = txtDestination.Text;
             var overwrite = cbOverwrite.Checked;
+            var gensavefile = cbGenSaveFiles.Checked;
 
             if (!System.IO.Directory.Exists(outputdir))
             {
@@ -136,11 +137,19 @@ namespace EZ4Patcher
 
                 var source = item.SubItems[5].Text;
                 var destination = System.IO.Path.Combine(outputdir, item.SubItems[3].Text);
-                item.SubItems[4].Text = PatchFile(source, destination, overwrite);
+                item.SubItems[4].Text = PatchFile(source, destination, overwrite, gensavefile);
             }
         }
 
-        string PatchFile(string source, string destination, bool overwrite)
+        void GenerateSaveFile(string filename, bool overwrite, int size)
+        {
+            if (size < 1) return;
+
+            var str = new string('\xFF', size);
+            System.IO.File.WriteAllText(filename, str);
+        }
+
+        string PatchFile(string source, string destination, bool overwrite, bool generateSaver)
         {
             if (source.ToLowerInvariant() == destination.ToLowerInvariant())
                 return "Invalid Destination";
@@ -166,11 +175,37 @@ namespace EZ4Patcher
 
                 System.IO.File.WriteAllBytes(destination, data);
 
-                return string.Format("OK {0}/{1}", savetype, savesize);
+                if (generateSaver && savesize > 0)
+                {
+                    var dest = System.IO.Path.GetDirectoryName(destination);
+                    dest = System.IO.Path.Combine(dest, "saver");
+                    if (!System.IO.Directory.Exists(dest))
+                        System.IO.Directory.CreateDirectory(dest);
+
+                    var destname = System.IO.Path.GetFileName(destination);
+                    var saverfile = System.IO.Path.Combine(dest, destname);
+                    saverfile = System.IO.Path.ChangeExtension(saverfile, "sav");
+
+                    GenerateSaveFile(saverfile, overwrite, (int)savesize);
+                }
+
+                return string.Format("OK {0}/{1}", StypeToStr(savetype), savesize);
             }
             catch (Exception e)
             {
                 return "Error: " + e.Message;
+            }
+        }
+
+        string StypeToStr(int savetype)
+        {
+            switch (savetype)
+            {
+                case 0: return "None";
+                case 1: return "SRAM";
+                case 2: return "EEPROM";
+                case 3: return "Flash";
+                default: return "Unknown";
             }
         }
 
@@ -202,12 +237,15 @@ namespace EZ4Patcher
             {
                 openFileDialog1.InitialDirectory = dir;
             }
+
+            cbGenSaveFiles.Checked = Properties.Settings.Default.GenerateSaveFiles;
         }
 
         private void SaveSettings()
         {
             Properties.Settings.Default.DestinationDir = txtDestination.Text;
             Properties.Settings.Default.SourceDir = openFileDialog1.InitialDirectory;
+            Properties.Settings.Default.GenerateSaveFiles = cbGenSaveFiles.Checked;
             Properties.Settings.Default.Save();
         }
 

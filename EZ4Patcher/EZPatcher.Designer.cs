@@ -35,22 +35,23 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.lvFileList = new System.Windows.Forms.ListView();
-            this.btnAddFiles = new System.Windows.Forms.Button();
-            this.btnPatch = new System.Windows.Forms.Button();
             this.cmName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmOutputName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmProcessed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnAddFiles = new System.Windows.Forms.Button();
+            this.btnPatch = new System.Windows.Forms.Button();
             this.cbOverwrite = new System.Windows.Forms.CheckBox();
             this.btnClearSuccessful = new System.Windows.Forms.Button();
             this.btnClearAll = new System.Windows.Forms.Button();
+            this.cbGenSaveFiles = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // btnDestinationSelect
             // 
-            this.btnDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDestinationSelect.Location = new System.Drawing.Point(497, 4);
+            this.btnDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDestinationSelect.Location = new System.Drawing.Point(582, 381);
             this.btnDestinationSelect.Name = "btnDestinationSelect";
             this.btnDestinationSelect.Size = new System.Drawing.Size(75, 23);
             this.btnDestinationSelect.TabIndex = 0;
@@ -60,21 +61,22 @@
             // 
             // txtDestination
             // 
-            this.txtDestination.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtDestination.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDestination.Location = new System.Drawing.Point(66, 6);
+            this.txtDestination.Location = new System.Drawing.Point(66, 383);
             this.txtDestination.Name = "txtDestination";
-            this.txtDestination.Size = new System.Drawing.Size(425, 20);
+            this.txtDestination.Size = new System.Drawing.Size(510, 20);
             this.txtDestination.TabIndex = 1;
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(0, 9);
+            this.label1.Location = new System.Drawing.Point(0, 386);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 13);
+            this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Destination";
+            this.label1.Text = "Output Dir";
             // 
             // folderBrowserDialog1
             // 
@@ -98,34 +100,12 @@
             this.cmSize,
             this.cmOutputName,
             this.cmProcessed});
-            this.lvFileList.Location = new System.Drawing.Point(3, 33);
+            this.lvFileList.Location = new System.Drawing.Point(3, 42);
             this.lvFileList.Name = "lvFileList";
-            this.lvFileList.Size = new System.Drawing.Size(569, 186);
+            this.lvFileList.Size = new System.Drawing.Size(654, 333);
             this.lvFileList.TabIndex = 3;
             this.lvFileList.UseCompatibleStateImageBehavior = false;
             this.lvFileList.View = System.Windows.Forms.View.Details;
-            // 
-            // btnAddFiles
-            // 
-            this.btnAddFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnAddFiles.Location = new System.Drawing.Point(3, 226);
-            this.btnAddFiles.Name = "btnAddFiles";
-            this.btnAddFiles.Size = new System.Drawing.Size(75, 23);
-            this.btnAddFiles.TabIndex = 4;
-            this.btnAddFiles.Text = "Add Files";
-            this.btnAddFiles.UseVisualStyleBackColor = true;
-            this.btnAddFiles.Click += new System.EventHandler(this.btnAddFiles_Click);
-            // 
-            // btnPatch
-            // 
-            this.btnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPatch.Location = new System.Drawing.Point(497, 226);
-            this.btnPatch.Name = "btnPatch";
-            this.btnPatch.Size = new System.Drawing.Size(75, 23);
-            this.btnPatch.TabIndex = 5;
-            this.btnPatch.Text = "Patch";
-            this.btnPatch.UseVisualStyleBackColor = true;
-            this.btnPatch.Click += new System.EventHandler(this.btnPatch_Click);
             // 
             // cmName
             // 
@@ -151,11 +131,33 @@
             // 
             this.cmProcessed.Text = "Processed";
             // 
+            // btnAddFiles
+            // 
+            this.btnAddFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddFiles.Location = new System.Drawing.Point(344, 12);
+            this.btnAddFiles.Name = "btnAddFiles";
+            this.btnAddFiles.Size = new System.Drawing.Size(75, 23);
+            this.btnAddFiles.TabIndex = 4;
+            this.btnAddFiles.Text = "Add Files";
+            this.btnAddFiles.UseVisualStyleBackColor = true;
+            this.btnAddFiles.Click += new System.EventHandler(this.btnAddFiles_Click);
+            // 
+            // btnPatch
+            // 
+            this.btnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPatch.Location = new System.Drawing.Point(582, 410);
+            this.btnPatch.Name = "btnPatch";
+            this.btnPatch.Size = new System.Drawing.Size(75, 23);
+            this.btnPatch.TabIndex = 5;
+            this.btnPatch.Text = "Patch";
+            this.btnPatch.UseVisualStyleBackColor = true;
+            this.btnPatch.Click += new System.EventHandler(this.btnPatch_Click);
+            // 
             // cbOverwrite
             // 
-            this.cbOverwrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbOverwrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbOverwrite.AutoSize = true;
-            this.cbOverwrite.Location = new System.Drawing.Point(420, 230);
+            this.cbOverwrite.Location = new System.Drawing.Point(131, 414);
             this.cbOverwrite.Name = "cbOverwrite";
             this.cbOverwrite.Size = new System.Drawing.Size(71, 17);
             this.cbOverwrite.TabIndex = 6;
@@ -164,8 +166,8 @@
             // 
             // btnClearSuccessful
             // 
-            this.btnClearSuccessful.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnClearSuccessful.Location = new System.Drawing.Point(113, 226);
+            this.btnClearSuccessful.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearSuccessful.Location = new System.Drawing.Point(454, 12);
             this.btnClearSuccessful.Name = "btnClearSuccessful";
             this.btnClearSuccessful.Size = new System.Drawing.Size(98, 23);
             this.btnClearSuccessful.TabIndex = 7;
@@ -175,8 +177,8 @@
             // 
             // btnClearAll
             // 
-            this.btnClearAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnClearAll.Location = new System.Drawing.Point(217, 226);
+            this.btnClearAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearAll.Location = new System.Drawing.Point(558, 12);
             this.btnClearAll.Name = "btnClearAll";
             this.btnClearAll.Size = new System.Drawing.Size(98, 23);
             this.btnClearAll.TabIndex = 8;
@@ -184,12 +186,26 @@
             this.btnClearAll.UseVisualStyleBackColor = true;
             this.btnClearAll.Click += new System.EventHandler(this.btnClearAll_Click);
             // 
+            // cbGenSaveFiles
+            // 
+            this.cbGenSaveFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbGenSaveFiles.AutoSize = true;
+            this.cbGenSaveFiles.Checked = true;
+            this.cbGenSaveFiles.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbGenSaveFiles.Location = new System.Drawing.Point(3, 414);
+            this.cbGenSaveFiles.Name = "cbGenSaveFiles";
+            this.cbGenSaveFiles.Size = new System.Drawing.Size(122, 17);
+            this.cbGenSaveFiles.TabIndex = 9;
+            this.cbGenSaveFiles.Text = "Generate Save Files";
+            this.cbGenSaveFiles.UseVisualStyleBackColor = true;
+            // 
             // EZPatcher
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(578, 253);
+            this.ClientSize = new System.Drawing.Size(663, 445);
+            this.Controls.Add(this.cbGenSaveFiles);
             this.Controls.Add(this.btnClearAll);
             this.Controls.Add(this.btnClearSuccessful);
             this.Controls.Add(this.cbOverwrite);
@@ -227,6 +243,7 @@
         private System.Windows.Forms.CheckBox cbOverwrite;
         private System.Windows.Forms.Button btnClearSuccessful;
         private System.Windows.Forms.Button btnClearAll;
+        private System.Windows.Forms.CheckBox cbGenSaveFiles;
     }
 }
 

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZ4Patcher", "EZ4Patcher\EZ4Patcher.csproj", "{58C409A7-3574-4683-84B6-DB04EB315E24}"
+	ProjectSection(ProjectDependencies) = postProject
+		{539D006B-2F7B-436F-B590-E8795FF0FA0F} = {539D006B-2F7B-436F-B590-E8795FF0FA0F}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EZBridge", "EZBridge\EZBridge.vcxproj", "{539D006B-2F7B-436F-B590-E8795FF0FA0F}"
 EndProject
