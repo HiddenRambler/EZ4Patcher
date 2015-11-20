@@ -20,7 +20,7 @@ namespace EZ4Patcher
             lvFileList.Columns[1].Width = 36;
             lvFileList.Columns[2].Width = 60;
             lvFileList.Columns[3].Width = 191;
-            lvFileList.Columns[4].Width = 60;
+            lvFileList.Columns[4].Width = 112;
 
             LoadSettings();
         }
@@ -74,6 +74,9 @@ namespace EZ4Patcher
 
         public string GetBytesReadable(long i)
         {
+            //from stackoverflow.com
+
+
             // Get absolute value
             long absolute_i = (i < 0 ? -i : i);
             // Determine the suffix and readable value
@@ -119,8 +122,12 @@ namespace EZ4Patcher
             return readable.ToString("0.### ") + suffix;
         }
 
+        volatile bool CancalPatching = false;
+
         private void btnPatch_Click(object sender, EventArgs e)
         {
+            CancalPatching = false;
+
             var outputdir = txtDestination.Text;
             var overwrite = cbOverwrite.Checked;
             var gensavefile = cbGenSaveFiles.Checked;
@@ -130,15 +137,31 @@ namespace EZ4Patcher
                 MessageBox.Show("Invalid destination", "Error");
             }
 
-            foreach (ListViewItem item in lvFileList.Items)
+            ShowStatus(true);
+            try
             {
-                if (item.SubItems[4].Text.StartsWith("OK "))
-                    continue;
+                prgProgress.Value = 0;
+                prgProgress.Maximum = lvFileList.Items.Count;
 
-                var source = item.SubItems[5].Text;
-                var destination = System.IO.Path.Combine(outputdir, item.SubItems[3].Text);
-                item.SubItems[4].Text = PatchFile(source, destination, overwrite, gensavefile);
-                Application.DoEvents();
+                int count = lvFileList.Items.Count;
+                for(int i=0 ;i<count; i++)
+                {
+                    if (CancalPatching) break;
+
+                    ListViewItem item = lvFileList.Items[i];
+                    if (item.SubItems[4].Text.StartsWith("OK "))
+                        continue;
+
+                    var source = item.SubItems[5].Text;
+                    var destination = System.IO.Path.Combine(outputdir, item.SubItems[3].Text);
+                    item.SubItems[4].Text = PatchFile(source, destination, overwrite, gensavefile);
+                    Application.DoEvents();
+                    UpdateProgress(i, count);
+                }
+            }
+            finally
+            {
+                ShowStatus(false);
             }
         }
 
@@ -253,6 +276,32 @@ namespace EZ4Patcher
         private void EZPatcher_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettings();
+        }
+
+        void ShowStatus(bool busy)
+        {
+            lblProgress.Visible = busy;
+            prgProgress.Visible = busy;
+            btnPatch.Visible = !busy;
+            btnPatch.Enabled = !busy;
+            btnCancel.Visible = busy;
+            btnCancel.Enabled = busy;
+        }
+
+        void UpdateProgress(int current, int max)
+        {
+            lblProgress.Text = string.Format("{0}/{1}", current, max);
+            prgProgress.Value = current;
+        }
+
+        private void EZPatcher_Load(object sender, EventArgs e)
+        {
+            ShowStatus(false);
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            CancalPatching = true;
         }
 
     }

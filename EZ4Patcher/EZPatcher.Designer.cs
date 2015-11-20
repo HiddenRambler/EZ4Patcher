@@ -46,6 +46,9 @@
             this.btnClearSuccessful = new System.Windows.Forms.Button();
             this.btnClearAll = new System.Windows.Forms.Button();
             this.cbGenSaveFiles = new System.Windows.Forms.CheckBox();
+            this.prgProgress = new System.Windows.Forms.ProgressBar();
+            this.lblProgress = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnDestinationSelect
@@ -130,6 +133,7 @@
             // cmProcessed
             // 
             this.cmProcessed.Text = "Processed";
+            this.cmProcessed.Width = 112;
             // 
             // btnAddFiles
             // 
@@ -199,12 +203,51 @@
             this.cbGenSaveFiles.Text = "Generate Save Files";
             this.cbGenSaveFiles.UseVisualStyleBackColor = true;
             // 
+            // prgProgress
+            // 
+            this.prgProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.prgProgress.Location = new System.Drawing.Point(209, 414);
+            this.prgProgress.Name = "prgProgress";
+            this.prgProgress.Size = new System.Drawing.Size(367, 19);
+            this.prgProgress.Step = 1;
+            this.prgProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.prgProgress.TabIndex = 10;
+            this.prgProgress.Value = 50;
+            this.prgProgress.Visible = false;
+            // 
+            // lblProgress
+            // 
+            this.lblProgress.AutoSize = true;
+            this.lblProgress.BackColor = System.Drawing.Color.Transparent;
+            this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProgress.Location = new System.Drawing.Point(12, 17);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(27, 13);
+            this.lblProgress.TabIndex = 11;
+            this.lblProgress.Text = "0/0";
+            this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.Location = new System.Drawing.Point(582, 410);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 12;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // EZPatcher
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 445);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.lblProgress);
+            this.Controls.Add(this.prgProgress);
             this.Controls.Add(this.cbGenSaveFiles);
             this.Controls.Add(this.btnClearAll);
             this.Controls.Add(this.btnClearSuccessful);
@@ -219,6 +262,7 @@
             this.Name = "EZPatcher";
             this.Text = "EZPatcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EZPatcher_FormClosing);
+            this.Load += new System.EventHandler(this.EZPatcher_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.EZPatcher_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.EZPatcher_DragEnter);
             this.ResumeLayout(false);
@@ -245,6 +289,9 @@
         private System.Windows.Forms.Button btnClearSuccessful;
         private System.Windows.Forms.Button btnClearAll;
         private System.Windows.Forms.CheckBox cbGenSaveFiles;
+        private System.Windows.Forms.ProgressBar prgProgress;
+        private System.Windows.Forms.Label lblProgress;
+        private System.Windows.Forms.Button btnCancel;
     }
 }
 
