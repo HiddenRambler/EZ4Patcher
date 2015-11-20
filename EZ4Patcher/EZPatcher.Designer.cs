@@ -218,6 +218,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "EZPatcher";
             this.Text = "EZPatcher";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EZPatcher_FormClosing);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.EZPatcher_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.EZPatcher_DragEnter);
             this.ResumeLayout(false);

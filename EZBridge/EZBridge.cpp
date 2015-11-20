@@ -70,9 +70,7 @@ unsigned int GetTruncatedRomSize(unsigned char *data, unsigned int len) {
 		b = b << 4;
 	}
 
-	return b;
-
-	if (b < len)
+	if (b > len)
 		return len;
 
 

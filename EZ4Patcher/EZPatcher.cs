@@ -138,6 +138,7 @@ namespace EZ4Patcher
                 var source = item.SubItems[5].Text;
                 var destination = System.IO.Path.Combine(outputdir, item.SubItems[3].Text);
                 item.SubItems[4].Text = PatchFile(source, destination, overwrite, gensavefile);
+                Application.DoEvents();
             }
         }
 
@@ -247,6 +248,11 @@ namespace EZ4Patcher
             Properties.Settings.Default.SourceDir = openFileDialog1.InitialDirectory;
             Properties.Settings.Default.GenerateSaveFiles = cbGenSaveFiles.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        private void EZPatcher_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveSettings();
         }
 
     }
