@@ -10,6 +10,8 @@ EZ4Patcher only provided basic save patching functionality so reset patching and
 
 ### Installation
 
+Compile with Visual Studio 2013 or get the prebuilt binaries from my google drive (see version history below) and extract to any folder.
+
 The EZ4Patch.dll file from the EZ4Client is required for this software to work. You can get it from http://www.ezflash.cn/downloads/ .
 
 Put the dll along with the following files from the build and run the exe:
@@ -18,6 +20,16 @@ Put the dll along with the following files from the build and run the exe:
     EZ4Patcher.exe.config
     EZBridge.dll
 
+### Version History
+
+    V1.1 (2015/11/21)
+		Binaries: https://drive.google.com/file/d/0BwV_DUnv_6kxdXE5alNrVThiWG8/view?usp=sharing
+		
+        Option for grouping patched roms to subfolders of 80 files each.
+        Allow sorting file list by clicking the list header.
+        Skip duplicate files when adding new files to list.
+        Fixed: "Clear All" and "Clear Successful" buttons were swapped.
+        Moved progress state to a status bar.
 	
 ### Copyright/Licence
 

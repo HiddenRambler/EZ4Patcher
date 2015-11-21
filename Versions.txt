@@ -1,0 +1,10 @@
+EZPatcher by rambler@hiddenramblings.com
+
+For latest version check: https://github.com/HiddenRambler/EZ4Patcher
+
+V1.1 (2015/11/21)
+	Option for grouping patched roms to subfolders of 80 files each.
+	Allow sorting file list by clicking the list header.
+	Skip duplicate files when adding new files to list.
+	Fixed: "Clear All" and "Clear Successful" buttons were swapped.
+	Moved progress state to a status bar.
