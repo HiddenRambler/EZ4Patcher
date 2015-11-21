@@ -115,6 +115,7 @@
             this.lvFileList.TabIndex = 3;
             this.lvFileList.UseCompatibleStateImageBehavior = false;
             this.lvFileList.View = System.Windows.Forms.View.Details;
+            this.lvFileList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvFileList_ColumnClick);
             // 
             // cmName
             // 

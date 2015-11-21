@@ -20,6 +20,8 @@ namespace EZ4Patcher
 
         const int OUTPUT_FILE_GROUP_COUNT = 80;
 
+        private ListViewColumnSorter lvwColumnSorter = new ListViewColumnSorter();
+
         public EZPatcher()
         {
             InitializeComponent();
@@ -30,6 +32,8 @@ namespace EZ4Patcher
             lvFileList.Columns[COL_SIZE].Width = 60;
             lvFileList.Columns[COL_OUTNAME].Width = 191;
             lvFileList.Columns[COL_RESULT].Width = 112;
+
+            lvFileList.ListViewItemSorter = lvwColumnSorter;
 
             LoadSettings();
         }
@@ -62,29 +66,41 @@ namespace EZ4Patcher
 
         void AddFiles(string[] filenames)
         {
-            long totsize = 0;
-            foreach(var f in filenames) {
-                var fLower = f.ToLowerInvariant();
-                if (filelist.Contains(fLower)) continue;
+            var oldc = Cursor;
+            Cursor = Cursors.WaitCursor;
+            lvFileList.BeginUpdate();
+            try
+            {
+                long totsize = 0;
+                foreach (var f in filenames)
+                {
+                    var fLower = f.ToLowerInvariant();
+                    if (filelist.Contains(fLower)) continue;
 
-                var size = new System.IO.FileInfo(f).Length;
+                    var size = new System.IO.FileInfo(f).Length;
 
-                var item = new string[6];
-                item[COL_FNAME] = System.IO.Path.GetFileName(f);
-                item[COL_DIR] = System.IO.Path.GetDirectoryName(f);
-                item[COL_SIZE] = GetBytesReadable(size);
-                item[COL_OUTNAME] = item[0]; //TODO: some cleaned up name
-                item[COL_RESULT] = "";
-                item[COL_FULL_NAME] = f;
+                    var item = new string[6];
+                    item[COL_FNAME] = System.IO.Path.GetFileName(f);
+                    item[COL_DIR] = System.IO.Path.GetDirectoryName(f);
+                    item[COL_SIZE] = GetBytesReadable(size);
+                    item[COL_OUTNAME] = item[0]; //TODO: some cleaned up name
+                    item[COL_RESULT] = "";
+                    item[COL_FULL_NAME] = f;
 
-                var lv = new ListViewItem(item);
-                lvFileList.Items.Add(lv);
-                lv.Tag = size;
-                totsize += size;
+                    var lv = new ListViewItem(item);
+                    lvFileList.Items.Add(lv);
+                    lv.Tag = size;
+                    totsize += size;
 
-                filelist.Add(fLower);
+                    filelist.Add(fLower);
+                }
+                TotalSize += totsize;
             }
-            TotalSize += totsize;
+            finally
+            {
+                lvFileList.EndUpdate();
+                Cursor = oldc;
+            }
         }
 
         private void btnAddFiles_Click(object sender, EventArgs e)
@@ -359,6 +375,27 @@ namespace EZ4Patcher
         private void btnCancel_Click(object sender, EventArgs e)
         {
             CancalPatching = true;
+        }
+
+        private void lvFileList_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (e.Column == lvwColumnSorter.SortColumn)
+            {
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                lvwColumnSorter.SortColumn = e.Column;
+                lvwColumnSorter.Order = SortOrder.Ascending;
+            }
+            lvFileList.Sort();
         }
 
     }
