@@ -166,7 +166,7 @@ namespace EZ4Patcher
 
         volatile bool CancalPatching = false;
 
-        void PatchFiles(string outputRoot, bool overwrite, bool gensavefile, bool groupOutput)
+        void PatchFiles(string outputRoot, bool overwrite, bool gensavefile, bool groupOutput, bool trimRoms)
         {
             CancalPatching = false;
             ShowStatus(true);
@@ -212,7 +212,7 @@ namespace EZ4Patcher
 
                     var source = item.SubItems[COL_FULL_NAME].Text;
                     var destination = System.IO.Path.Combine(outputDir, item.SubItems[COL_OUTNAME].Text);
-                    item.SubItems[COL_RESULT].Text = PatchFile(source, destination, overwrite, gensavefile, saverRoot);
+                    item.SubItems[COL_RESULT].Text = PatchFile(source, destination, overwrite, gensavefile, saverRoot, trimRoms);
                     Application.DoEvents();
                     UpdateProgress(i, count);
 
@@ -233,7 +233,7 @@ namespace EZ4Patcher
             {
                 MessageBox.Show("Invalid destination", "Error");
             }
-            PatchFiles(outputdir, cbOverwrite.Checked, cbGenSaveFiles.Checked, cbGroupOutput.Checked);
+            PatchFiles(outputdir, cbOverwrite.Checked, cbGenSaveFiles.Checked, cbGroupOutput.Checked, cbAutoTrim.Checked);
         }
 
         void GenerateSaveFile(string filename, bool overwrite, int size)
@@ -244,7 +244,7 @@ namespace EZ4Patcher
             System.IO.File.WriteAllText(filename, str);
         }
 
-        string PatchFile(string source, string destination, bool overwrite, bool generateSaver, string saverRoot)
+        string PatchFile(string source, string destination, bool overwrite, bool generateSaver, string saverRoot, bool trim)
         {
             if (source.ToLowerInvariant() == destination.ToLowerInvariant())
                 return "Invalid Destination";
@@ -255,7 +255,7 @@ namespace EZ4Patcher
             try
             {
                 var data = System.IO.File.ReadAllBytes(source);
-                uint size = 0;
+                uint size = trim ? 0 : (uint)data.Length;
                 ushort savetype = 0;
                 uint savesize = 0;
 
@@ -339,6 +339,7 @@ namespace EZ4Patcher
 
             cbGenSaveFiles.Checked = Properties.Settings.Default.GenerateSaveFiles;
             cbGroupOutput.Checked = Properties.Settings.Default.GroupOutput;
+            cbAutoTrim.Checked = Properties.Settings.Default.AutoTrim;
         }
 
         private void SaveSettings()
@@ -347,6 +348,7 @@ namespace EZ4Patcher
             Properties.Settings.Default.SourceDir = openFileDialog1.InitialDirectory;
             Properties.Settings.Default.GenerateSaveFiles = cbGenSaveFiles.Checked;
             Properties.Settings.Default.GroupOutput = cbGroupOutput.Checked;
+            Properties.Settings.Default.AutoTrim = cbAutoTrim.Checked;
             Properties.Settings.Default.Save();
         }
 

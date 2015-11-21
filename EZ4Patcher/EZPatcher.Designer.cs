@@ -54,13 +54,15 @@
             this.stlblSummary = new System.Windows.Forms.ToolStripStatusLabel();
             this.cbGroupOutput = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.cbAutoTrim = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnDestinationSelect
             // 
             this.btnDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDestinationSelect.Location = new System.Drawing.Point(582, 363);
+            this.btnDestinationSelect.Location = new System.Drawing.Point(581, 336);
             this.btnDestinationSelect.Name = "btnDestinationSelect";
             this.btnDestinationSelect.Size = new System.Drawing.Size(75, 23);
             this.btnDestinationSelect.TabIndex = 0;
@@ -72,7 +74,7 @@
             // 
             this.txtDestination.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDestination.Location = new System.Drawing.Point(75, 363);
+            this.txtDestination.Location = new System.Drawing.Point(74, 336);
             this.txtDestination.Name = "txtDestination";
             this.txtDestination.Size = new System.Drawing.Size(501, 20);
             this.txtDestination.TabIndex = 1;
@@ -81,7 +83,7 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(0, 368);
+            this.label1.Location = new System.Drawing.Point(-1, 341);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 2;
@@ -111,7 +113,7 @@
             this.cmProcessed});
             this.lvFileList.Location = new System.Drawing.Point(3, 42);
             this.lvFileList.Name = "lvFileList";
-            this.lvFileList.Size = new System.Drawing.Size(654, 315);
+            this.lvFileList.Size = new System.Drawing.Size(654, 288);
             this.lvFileList.TabIndex = 3;
             this.lvFileList.UseCompatibleStateImageBehavior = false;
             this.lvFileList.View = System.Windows.Forms.View.Details;
@@ -168,7 +170,7 @@
             // 
             this.cbOverwrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbOverwrite.AutoSize = true;
-            this.cbOverwrite.Location = new System.Drawing.Point(153, 396);
+            this.cbOverwrite.Location = new System.Drawing.Point(12, 396);
             this.cbOverwrite.Name = "cbOverwrite";
             this.cbOverwrite.Size = new System.Drawing.Size(71, 17);
             this.cbOverwrite.TabIndex = 6;
@@ -204,7 +206,7 @@
             this.cbGenSaveFiles.AutoSize = true;
             this.cbGenSaveFiles.Checked = true;
             this.cbGenSaveFiles.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbGenSaveFiles.Location = new System.Drawing.Point(3, 396);
+            this.cbGenSaveFiles.Location = new System.Drawing.Point(12, 373);
             this.cbGenSaveFiles.Name = "cbGenSaveFiles";
             this.cbGenSaveFiles.Size = new System.Drawing.Size(117, 17);
             this.cbGenSaveFiles.TabIndex = 9;
@@ -256,7 +258,7 @@
             // 
             this.cbGroupOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbGroupOutput.AutoSize = true;
-            this.cbGroupOutput.Location = new System.Drawing.Point(246, 396);
+            this.cbGroupOutput.Location = new System.Drawing.Point(152, 373);
             this.cbGroupOutput.Name = "cbGroupOutput";
             this.cbGroupOutput.Size = new System.Drawing.Size(142, 17);
             this.cbGroupOutput.TabIndex = 15;
@@ -264,12 +266,37 @@
             this.toolTip1.SetToolTip(this.cbGroupOutput, "Creates sub folders in the output directory grouping ROMs into 80 file groups");
             this.cbGroupOutput.UseVisualStyleBackColor = true;
             // 
+            // cbAutoTrim
+            // 
+            this.cbAutoTrim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbAutoTrim.AutoSize = true;
+            this.cbAutoTrim.Location = new System.Drawing.Point(152, 396);
+            this.cbAutoTrim.Name = "cbAutoTrim";
+            this.cbAutoTrim.Size = new System.Drawing.Size(212, 17);
+            this.cbAutoTrim.TabIndex = 16;
+            this.cbAutoTrim.Text = "Trim unused space at the end of ROMs";
+            this.toolTip1.SetToolTip(this.cbAutoTrim, "Trims unused space at the end of ROM file (doesnt modify source files). Should be" +
+        " ok in most cases");
+            this.cbAutoTrim.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Blue;
+            this.label2.Location = new System.Drawing.Point(12, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(235, 26);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "EZPatcher by hiddenramblings.com\r\nhttps://github.com/HiddenRambler/EZ4Patcher\r\n";
+            // 
             // EZPatcher
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 445);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cbAutoTrim);
             this.Controls.Add(this.cbGroupOutput);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnCancel);
@@ -323,6 +350,8 @@
         private System.Windows.Forms.ToolStripStatusLabel stlblSummary;
         private System.Windows.Forms.CheckBox cbGroupOutput;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.CheckBox cbAutoTrim;
+        private System.Windows.Forms.Label label2;
     }
 }
 

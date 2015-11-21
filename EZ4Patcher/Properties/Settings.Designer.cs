@@ -70,5 +70,17 @@ namespace EZ4Patcher.Properties {
                 this["GroupOutput"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutoTrim {
+            get {
+                return ((bool)(this["AutoTrim"]));
+            }
+            set {
+                this["AutoTrim"] = value;
+            }
+        }
     }
 }
