@@ -227,7 +227,7 @@ namespace EZ4Patcher
 
         private void btnPatch_Click(object sender, EventArgs e)
         {
-
+            SaveSettings();
             var outputdir = txtDestination.Text;
             if (!System.IO.Directory.Exists(outputdir))
             {
@@ -338,6 +338,7 @@ namespace EZ4Patcher
             }
 
             cbGenSaveFiles.Checked = Properties.Settings.Default.GenerateSaveFiles;
+            cbGroupOutput.Checked = Properties.Settings.Default.GroupOutput;
         }
 
         private void SaveSettings()
@@ -345,6 +346,7 @@ namespace EZ4Patcher
             Properties.Settings.Default.DestinationDir = txtDestination.Text;
             Properties.Settings.Default.SourceDir = openFileDialog1.InitialDirectory;
             Properties.Settings.Default.GenerateSaveFiles = cbGenSaveFiles.Checked;
+            Properties.Settings.Default.GroupOutput = cbGroupOutput.Checked;
             Properties.Settings.Default.Save();
         }
 

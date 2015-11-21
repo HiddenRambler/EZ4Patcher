@@ -58,5 +58,17 @@ namespace EZ4Patcher.Properties {
                 this["GenerateSaveFiles"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GroupOutput {
+            get {
+                return ((bool)(this["GroupOutput"]));
+            }
+            set {
+                this["GroupOutput"] = value;
+            }
+        }
     }
 }
