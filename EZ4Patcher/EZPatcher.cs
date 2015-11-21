@@ -11,19 +11,31 @@ namespace EZ4Patcher
 {
     public partial class EZPatcher : Form
     {
+        const int COL_FNAME     = 0;
+        const int COL_DIR       = 1;
+        const int COL_SIZE      = 2;
+        const int COL_OUTNAME   = 3;
+        const int COL_RESULT    = 4;
+        const int COL_FULL_NAME = 5;
+
         public EZPatcher()
         {
             InitializeComponent();
 
             //list view doesnt retain design time column sizes
-            lvFileList.Columns[0].Width = 213;
-            lvFileList.Columns[1].Width = 36;
-            lvFileList.Columns[2].Width = 60;
-            lvFileList.Columns[3].Width = 191;
-            lvFileList.Columns[4].Width = 112;
+            lvFileList.Columns[COL_FNAME].Width = 213;
+            lvFileList.Columns[COL_DIR].Width = 36;
+            lvFileList.Columns[COL_SIZE].Width = 60;
+            lvFileList.Columns[COL_OUTNAME].Width = 191;
+            lvFileList.Columns[COL_RESULT].Width = 112;
 
             LoadSettings();
         }
+
+
+        private long _TotalSize;
+        private long TotalSize { get { return _TotalSize; } set { _TotalSize = value; stlblSummary.Text = GetBytesReadable(value); } }
+        private HashSet<string> filelist = new HashSet<string>();
 
         private void EZPatcher_DragEnter(object sender, DragEventArgs e)
         {
@@ -48,18 +60,29 @@ namespace EZ4Patcher
 
         void AddFiles(string[] filenames)
         {
-            foreach(var f in filenames){
+            long totsize = 0;
+            foreach(var f in filenames) {
+                var fLower = f.ToLowerInvariant();
+                if (filelist.Contains(fLower)) continue;
+
+                var size = new System.IO.FileInfo(f).Length;
+
                 var item = new string[6];
-                item[0] = System.IO.Path.GetFileName(f);
-                item[1] = System.IO.Path.GetDirectoryName(f);
-                item[2] = GetBytesReadable(new System.IO.FileInfo(f).Length);
-                item[3] = item[0]; //TODO: some cleaned up name
-                item[4] = "";
-                item[5] = f;
+                item[COL_FNAME] = System.IO.Path.GetFileName(f);
+                item[COL_DIR] = System.IO.Path.GetDirectoryName(f);
+                item[COL_SIZE] = GetBytesReadable(size);
+                item[COL_OUTNAME] = item[0]; //TODO: some cleaned up name
+                item[COL_RESULT] = "";
+                item[COL_FULL_NAME] = f;
 
                 var lv = new ListViewItem(item);
                 lvFileList.Items.Add(lv);
+                lv.Tag = size;
+                totsize += size;
+
+                filelist.Add(fLower);
             }
+            TotalSize += totsize;
         }
 
         private void btnAddFiles_Click(object sender, EventArgs e)
@@ -140,8 +163,8 @@ namespace EZ4Patcher
             ShowStatus(true);
             try
             {
-                prgProgress.Value = 0;
-                prgProgress.Maximum = lvFileList.Items.Count;
+                stprgProgress.Value = 0;
+                stprgProgress.Maximum = lvFileList.Items.Count;
 
                 int count = lvFileList.Items.Count;
                 for(int i=0 ;i<count; i++)
@@ -149,12 +172,12 @@ namespace EZ4Patcher
                     if (CancalPatching) break;
 
                     ListViewItem item = lvFileList.Items[i];
-                    if (item.SubItems[4].Text.StartsWith("OK "))
+                    if (item.SubItems[COL_RESULT].Text.StartsWith("OK "))
                         continue;
 
-                    var source = item.SubItems[5].Text;
-                    var destination = System.IO.Path.Combine(outputdir, item.SubItems[3].Text);
-                    item.SubItems[4].Text = PatchFile(source, destination, overwrite, gensavefile);
+                    var source = item.SubItems[COL_FULL_NAME].Text;
+                    var destination = System.IO.Path.Combine(outputdir, item.SubItems[COL_OUTNAME].Text);
+                    item.SubItems[COL_RESULT].Text = PatchFile(source, destination, overwrite, gensavefile);
                     Application.DoEvents();
                     UpdateProgress(i, count);
                 }
@@ -235,16 +258,25 @@ namespace EZ4Patcher
 
         private void btnClearSuccessful_Click(object sender, EventArgs e)
         {
-            lvFileList.Items.Clear();
+            long size = 0;
+            foreach (ListViewItem item in lvFileList.Items)
+            {
+                if (item.SubItems[4].Text.StartsWith("OK "))
+                {
+                    lvFileList.Items.Remove(item);
+                    filelist.Remove(item.SubItems[COL_FULL_NAME].Text.ToLowerInvariant());
+                }
+                else
+                    size += (long)item.Tag;
+            }
+            TotalSize = size;
         }
 
         private void btnClearAll_Click(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in lvFileList.Items)
-            {
-                if (item.SubItems[4].Text.StartsWith("OK "))
-                    lvFileList.Items.Remove(item);
-            }
+            lvFileList.Items.Clear();
+            filelist.Clear();
+            TotalSize = 0;
         }
 
         private void LoadSettings()
@@ -280,18 +312,16 @@ namespace EZ4Patcher
 
         void ShowStatus(bool busy)
         {
-            lblProgress.Visible = busy;
-            prgProgress.Visible = busy;
-            btnPatch.Visible = !busy;
+            stlblProgress.Visible = busy;
+            stprgProgress.Visible = busy;
             btnPatch.Enabled = !busy;
-            btnCancel.Visible = busy;
             btnCancel.Enabled = busy;
         }
 
         void UpdateProgress(int current, int max)
         {
-            lblProgress.Text = string.Format("{0}/{1}", current, max);
-            prgProgress.Value = current;
+            stlblProgress.Text = string.Format("{0}/{1}", current, max);
+            stprgProgress.Value = current;
         }
 
         private void EZPatcher_Load(object sender, EventArgs e)

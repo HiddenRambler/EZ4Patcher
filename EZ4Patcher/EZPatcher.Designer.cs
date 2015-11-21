@@ -46,15 +46,18 @@
             this.btnClearSuccessful = new System.Windows.Forms.Button();
             this.btnClearAll = new System.Windows.Forms.Button();
             this.cbGenSaveFiles = new System.Windows.Forms.CheckBox();
-            this.prgProgress = new System.Windows.Forms.ProgressBar();
-            this.lblProgress = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.stlblProgress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stprgProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.stlblSummary = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnDestinationSelect
             // 
             this.btnDestinationSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDestinationSelect.Location = new System.Drawing.Point(582, 381);
+            this.btnDestinationSelect.Location = new System.Drawing.Point(582, 363);
             this.btnDestinationSelect.Name = "btnDestinationSelect";
             this.btnDestinationSelect.Size = new System.Drawing.Size(75, 23);
             this.btnDestinationSelect.TabIndex = 0;
@@ -66,16 +69,16 @@
             // 
             this.txtDestination.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDestination.Location = new System.Drawing.Point(66, 383);
+            this.txtDestination.Location = new System.Drawing.Point(75, 363);
             this.txtDestination.Name = "txtDestination";
-            this.txtDestination.Size = new System.Drawing.Size(510, 20);
+            this.txtDestination.Size = new System.Drawing.Size(501, 20);
             this.txtDestination.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(0, 386);
+            this.label1.Location = new System.Drawing.Point(0, 368);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 2;
@@ -105,7 +108,7 @@
             this.cmProcessed});
             this.lvFileList.Location = new System.Drawing.Point(3, 42);
             this.lvFileList.Name = "lvFileList";
-            this.lvFileList.Size = new System.Drawing.Size(654, 333);
+            this.lvFileList.Size = new System.Drawing.Size(654, 315);
             this.lvFileList.TabIndex = 3;
             this.lvFileList.UseCompatibleStateImageBehavior = false;
             this.lvFileList.View = System.Windows.Forms.View.Details;
@@ -149,7 +152,7 @@
             // btnPatch
             // 
             this.btnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPatch.Location = new System.Drawing.Point(582, 410);
+            this.btnPatch.Location = new System.Drawing.Point(500, 392);
             this.btnPatch.Name = "btnPatch";
             this.btnPatch.Size = new System.Drawing.Size(75, 23);
             this.btnPatch.TabIndex = 5;
@@ -161,7 +164,7 @@
             // 
             this.cbOverwrite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbOverwrite.AutoSize = true;
-            this.cbOverwrite.Location = new System.Drawing.Point(131, 414);
+            this.cbOverwrite.Location = new System.Drawing.Point(153, 396);
             this.cbOverwrite.Name = "cbOverwrite";
             this.cbOverwrite.Size = new System.Drawing.Size(71, 17);
             this.cbOverwrite.TabIndex = 6;
@@ -196,42 +199,17 @@
             this.cbGenSaveFiles.AutoSize = true;
             this.cbGenSaveFiles.Checked = true;
             this.cbGenSaveFiles.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbGenSaveFiles.Location = new System.Drawing.Point(3, 414);
+            this.cbGenSaveFiles.Location = new System.Drawing.Point(3, 396);
             this.cbGenSaveFiles.Name = "cbGenSaveFiles";
-            this.cbGenSaveFiles.Size = new System.Drawing.Size(122, 17);
+            this.cbGenSaveFiles.Size = new System.Drawing.Size(117, 17);
             this.cbGenSaveFiles.TabIndex = 9;
-            this.cbGenSaveFiles.Text = "Generate Save Files";
+            this.cbGenSaveFiles.Text = "Generate save files";
             this.cbGenSaveFiles.UseVisualStyleBackColor = true;
-            // 
-            // prgProgress
-            // 
-            this.prgProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.prgProgress.Location = new System.Drawing.Point(209, 414);
-            this.prgProgress.Name = "prgProgress";
-            this.prgProgress.Size = new System.Drawing.Size(367, 19);
-            this.prgProgress.Step = 1;
-            this.prgProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.prgProgress.TabIndex = 10;
-            this.prgProgress.Value = 50;
-            this.prgProgress.Visible = false;
-            // 
-            // lblProgress
-            // 
-            this.lblProgress.AutoSize = true;
-            this.lblProgress.BackColor = System.Drawing.Color.Transparent;
-            this.lblProgress.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProgress.Location = new System.Drawing.Point(12, 17);
-            this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(27, 13);
-            this.lblProgress.TabIndex = 11;
-            this.lblProgress.Text = "0/0";
-            this.lblProgress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.Location = new System.Drawing.Point(582, 410);
+            this.btnCancel.Location = new System.Drawing.Point(581, 392);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 12;
@@ -239,15 +217,43 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stlblSummary,
+            this.stprgProgress,
+            this.stlblProgress});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 423);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(663, 22);
+            this.statusStrip1.TabIndex = 14;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // stlblProgress
+            // 
+            this.stlblProgress.Name = "stlblProgress";
+            this.stlblProgress.Size = new System.Drawing.Size(10, 17);
+            this.stlblProgress.Text = " ";
+            // 
+            // stprgProgress
+            // 
+            this.stprgProgress.Name = "stprgProgress";
+            this.stprgProgress.Size = new System.Drawing.Size(100, 16);
+            // 
+            // stlblSummary
+            // 
+            this.stlblSummary.Name = "stlblSummary";
+            this.stlblSummary.Size = new System.Drawing.Size(10, 17);
+            this.stlblSummary.Text = " ";
+            // 
             // EZPatcher
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 445);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.lblProgress);
-            this.Controls.Add(this.prgProgress);
             this.Controls.Add(this.cbGenSaveFiles);
             this.Controls.Add(this.btnClearAll);
             this.Controls.Add(this.btnClearSuccessful);
@@ -265,6 +271,8 @@
             this.Load += new System.EventHandler(this.EZPatcher_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.EZPatcher_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.EZPatcher_DragEnter);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,9 +297,11 @@
         private System.Windows.Forms.Button btnClearSuccessful;
         private System.Windows.Forms.Button btnClearAll;
         private System.Windows.Forms.CheckBox cbGenSaveFiles;
-        private System.Windows.Forms.ProgressBar prgProgress;
-        private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel stlblProgress;
+        private System.Windows.Forms.ToolStripProgressBar stprgProgress;
+        private System.Windows.Forms.ToolStripStatusLabel stlblSummary;
     }
 }
 
