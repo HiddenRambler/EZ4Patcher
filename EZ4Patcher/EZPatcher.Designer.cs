@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EZPatcher));
             this.btnDestinationSelect = new System.Windows.Forms.Button();
             this.txtDestination = new System.Windows.Forms.TextBox();
@@ -51,6 +52,8 @@
             this.stlblProgress = new System.Windows.Forms.ToolStripStatusLabel();
             this.stprgProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.stlblSummary = new System.Windows.Forms.ToolStripStatusLabel();
+            this.cbGroupOutput = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -169,6 +172,7 @@
             this.cbOverwrite.Size = new System.Drawing.Size(71, 17);
             this.cbOverwrite.TabIndex = 6;
             this.cbOverwrite.Text = "Overwrite";
+            this.toolTip1.SetToolTip(this.cbOverwrite, "Overwrite any destination ROMs/Savefiles");
             this.cbOverwrite.UseVisualStyleBackColor = true;
             // 
             // btnClearSuccessful
@@ -204,6 +208,7 @@
             this.cbGenSaveFiles.Size = new System.Drawing.Size(117, 17);
             this.cbGenSaveFiles.TabIndex = 9;
             this.cbGenSaveFiles.Text = "Generate save files";
+            this.toolTip1.SetToolTip(this.cbGenSaveFiles, "Creates \"Save files\" along with a subdirectory called saver");
             this.cbGenSaveFiles.UseVisualStyleBackColor = true;
             // 
             // btnCancel
@@ -246,12 +251,25 @@
             this.stlblSummary.Size = new System.Drawing.Size(10, 17);
             this.stlblSummary.Text = " ";
             // 
+            // cbGroupOutput
+            // 
+            this.cbGroupOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbGroupOutput.AutoSize = true;
+            this.cbGroupOutput.Location = new System.Drawing.Point(246, 396);
+            this.cbGroupOutput.Name = "cbGroupOutput";
+            this.cbGroupOutput.Size = new System.Drawing.Size(142, 17);
+            this.cbGroupOutput.TabIndex = 15;
+            this.cbGroupOutput.Text = "Split output to subfolders";
+            this.toolTip1.SetToolTip(this.cbGroupOutput, "Creates sub folders in the output directory grouping ROMs into 80 file groups");
+            this.cbGroupOutput.UseVisualStyleBackColor = true;
+            // 
             // EZPatcher
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(663, 445);
+            this.Controls.Add(this.cbGroupOutput);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.cbGenSaveFiles);
@@ -302,6 +320,8 @@
         private System.Windows.Forms.ToolStripStatusLabel stlblProgress;
         private System.Windows.Forms.ToolStripProgressBar stprgProgress;
         private System.Windows.Forms.ToolStripStatusLabel stlblSummary;
+        private System.Windows.Forms.CheckBox cbGroupOutput;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

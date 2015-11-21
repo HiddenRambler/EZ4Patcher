@@ -18,6 +18,8 @@ namespace EZ4Patcher
         const int COL_RESULT    = 4;
         const int COL_FULL_NAME = 5;
 
+        const int OUTPUT_FILE_GROUP_COUNT = 80;
+
         public EZPatcher()
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace EZ4Patcher
 
 
         private long _TotalSize;
-        private long TotalSize { get { return _TotalSize; } set { _TotalSize = value; stlblSummary.Text = GetBytesReadable(value); } }
+        private long TotalSize { get { return _TotalSize; } set { _TotalSize = value; stlblSummary.Text = String.Format("{0} in {1} File(s)", GetBytesReadable(value), filelist.Count); } }
         private HashSet<string> filelist = new HashSet<string>();
 
         private void EZPatcher_DragEnter(object sender, DragEventArgs e)
@@ -145,29 +147,31 @@ namespace EZ4Patcher
             return readable.ToString("0.### ") + suffix;
         }
 
+
         volatile bool CancalPatching = false;
 
-        private void btnPatch_Click(object sender, EventArgs e)
+        void PatchFiles(string outputRoot, bool overwrite, bool gensavefile, bool groupOutput)
         {
             CancalPatching = false;
-
-            var outputdir = txtDestination.Text;
-            var overwrite = cbOverwrite.Checked;
-            var gensavefile = cbGenSaveFiles.Checked;
-
-            if (!System.IO.Directory.Exists(outputdir))
-            {
-                MessageBox.Show("Invalid destination", "Error");
-            }
-
             ShowStatus(true);
             try
             {
+                string outputDir = outputRoot;
+                string saverRoot = null;
+
+                if (gensavefile)
+                {
+                    saverRoot = System.IO.Path.Combine(outputRoot, "saver");
+                    if (!System.IO.Directory.Exists(saverRoot))
+                        System.IO.Directory.CreateDirectory(saverRoot);
+                }
+
                 stprgProgress.Value = 0;
                 stprgProgress.Maximum = lvFileList.Items.Count;
 
                 int count = lvFileList.Items.Count;
-                for(int i=0 ;i<count; i++)
+                int groupcount = 0;
+                for (int i = 0; i < count; i++)
                 {
                     if (CancalPatching) break;
 
@@ -175,17 +179,45 @@ namespace EZ4Patcher
                     if (item.SubItems[COL_RESULT].Text.StartsWith("OK "))
                         continue;
 
+                    if (groupcount == 0 && groupOutput)
+                    {
+                        var outname = System.IO.Path.GetFileNameWithoutExtension(item.SubItems[COL_OUTNAME].Text);
+                        var prefix = outname.Substring(0, outname.Length > 4 ? 4 : outname.Length);
+
+                        outputDir = System.IO.Path.Combine(outputRoot, prefix);
+                        int counter = 0;
+                        while (System.IO.Directory.Exists(prefix))
+                        {
+                            outputDir = System.IO.Path.Combine(outputRoot, prefix + counter.ToString(" X"));
+                        }
+
+                        System.IO.Directory.CreateDirectory(outputDir);
+                    }
+
                     var source = item.SubItems[COL_FULL_NAME].Text;
-                    var destination = System.IO.Path.Combine(outputdir, item.SubItems[COL_OUTNAME].Text);
-                    item.SubItems[COL_RESULT].Text = PatchFile(source, destination, overwrite, gensavefile);
+                    var destination = System.IO.Path.Combine(outputDir, item.SubItems[COL_OUTNAME].Text);
+                    item.SubItems[COL_RESULT].Text = PatchFile(source, destination, overwrite, gensavefile, saverRoot);
                     Application.DoEvents();
                     UpdateProgress(i, count);
+
+                    if (++groupcount > OUTPUT_FILE_GROUP_COUNT) groupcount = 0;
                 }
             }
             finally
             {
                 ShowStatus(false);
             }
+        }
+
+        private void btnPatch_Click(object sender, EventArgs e)
+        {
+
+            var outputdir = txtDestination.Text;
+            if (!System.IO.Directory.Exists(outputdir))
+            {
+                MessageBox.Show("Invalid destination", "Error");
+            }
+            PatchFiles(outputdir, cbOverwrite.Checked, cbGenSaveFiles.Checked, cbGroupOutput.Checked);
         }
 
         void GenerateSaveFile(string filename, bool overwrite, int size)
@@ -196,7 +228,7 @@ namespace EZ4Patcher
             System.IO.File.WriteAllText(filename, str);
         }
 
-        string PatchFile(string source, string destination, bool overwrite, bool generateSaver)
+        string PatchFile(string source, string destination, bool overwrite, bool generateSaver, string saverRoot)
         {
             if (source.ToLowerInvariant() == destination.ToLowerInvariant())
                 return "Invalid Destination";
@@ -224,13 +256,8 @@ namespace EZ4Patcher
 
                 if (generateSaver && savesize > 0)
                 {
-                    var dest = System.IO.Path.GetDirectoryName(destination);
-                    dest = System.IO.Path.Combine(dest, "saver");
-                    if (!System.IO.Directory.Exists(dest))
-                        System.IO.Directory.CreateDirectory(dest);
-
                     var destname = System.IO.Path.GetFileName(destination);
-                    var saverfile = System.IO.Path.Combine(dest, destname);
+                    var saverfile = System.IO.Path.Combine(saverRoot, destname);
                     saverfile = System.IO.Path.ChangeExtension(saverfile, "sav");
 
                     GenerateSaveFile(saverfile, overwrite, (int)savesize);
