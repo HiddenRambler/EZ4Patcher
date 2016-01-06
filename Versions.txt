@@ -2,6 +2,9 @@ EZPatcher by rambler@hiddenramblings.com
 
 For latest version check: https://github.com/HiddenRambler/EZ4Patcher
 
+V1.1 RuntimeFix (2016/01/06)
+	Fixed runtime dependency failure of EZBridge.dll due to debug compilation
+
 V1.1 (2015/11/21)
 	Option for grouping patched roms to subfolders of 80 files each.
 	Allow sorting file list by clicking the list header.
