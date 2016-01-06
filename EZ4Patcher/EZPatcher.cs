@@ -18,7 +18,7 @@ namespace EZ4Patcher
         const int COL_RESULT    = 4;
         const int COL_FULL_NAME = 5;
 
-        const int OUTPUT_FILE_GROUP_COUNT = 80;
+        const int OUTPUT_FILE_GROUP_COUNT = 50;
 
         private ListViewColumnSorter lvwColumnSorter = new ListViewColumnSorter();
 
@@ -198,7 +198,7 @@ namespace EZ4Patcher
                     if (groupcount == 0 && groupOutput)
                     {
                         var outname = System.IO.Path.GetFileNameWithoutExtension(item.SubItems[COL_OUTNAME].Text);
-                        var prefix = outname.Substring(0, outname.Length > 4 ? 4 : outname.Length);
+                        var prefix = outname.Replace(" ", "").Substring(0, outname.Length > 4 ? 4 : outname.Length);
 
                         outputDir = System.IO.Path.Combine(outputRoot, prefix);
                         int counter = 0;
@@ -232,6 +232,7 @@ namespace EZ4Patcher
             if (!System.IO.Directory.Exists(outputdir))
             {
                 MessageBox.Show("Invalid destination", "Error");
+                return;
             }
             PatchFiles(outputdir, cbOverwrite.Checked, cbGenSaveFiles.Checked, cbGroupOutput.Checked, cbAutoTrim.Checked);
         }
